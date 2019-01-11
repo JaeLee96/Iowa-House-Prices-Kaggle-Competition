@@ -6,7 +6,7 @@ As a team of 4, we participated in Kaggle competition for predicting affordabili
 
 After a rigorous data cleaning and data manipulation, we moved onto using various advanced regression techniques such as Random Forest (RF) and logistic regression. At the end, we have achieved accuracy of about 98% on test dataset and won _2nd place_ among participants of around 50 people!
 
-# 1. Competition Description
+# Competition Description
 
 ![alt text](https://storage.googleapis.com/kaggle-competitions/kaggle/5407/media/housesbanner.png)
 
@@ -14,7 +14,7 @@ Ask a home buyer to describe their dream house, and they probably won't begin wi
 
 With 79 explanatory variables describing (almost) every aspect of residential homes in Ames, Iowa, this competition challenges you to predict the final price of each home.
 
-# 2. Data Cleaning / Processing
+# Data Cleaning / Processing
 
 Examining the dataset brieﬂy gives preliminary insight for how the training and testing data should be manipulated which are:
 

@@ -18,7 +18,10 @@ Examining the dataset brieﬂy gives preliminary insight for how the training an
 
 # Methods
 
-First Header  | Second Header
+Models  | Accuracy
 ------------- | -------------
-Content Cell  | Content Cell
-Content Cell  | Content Cell
+Random Forest  | 98%
+Logistic Regression  | 96%
+Support Vector Machine (SVM)  | 93%
+Decision Trees  | 92%
+Naive Bayes  | 90%

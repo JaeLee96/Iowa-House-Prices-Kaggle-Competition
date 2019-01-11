@@ -63,6 +63,7 @@ __2. NAs are ﬁlled by measures of central tendency / most commonly occuring cl
 We want to use Logistic Regression as our ﬁrst method for classiﬁcation and use it as a baseline that we will then compare with more complex and fancy algorithms. Furthermore, we want to utilize at least one method that will classify observations according to the probability that they correspond to a certain class. 
 
 This means that if : ![alt text](https://latex.codecogs.com/gif.latex?Pr%28Affordable%7CX%29%20%3E%200.5) 
+
 then we classify that home as being aﬀordable!
 
 We considered building the logistic regression model where the logistic model has a logit that is linear in X, estimatingourcoeﬃcientsofthemodelbythemethodofmaximumlikelihood,therebyobtainingourpredictions.

@@ -1,0 +1,342 @@
+---
+title: "salllly"
+author: "Yuqi Zhu"
+date: "11/29/2018"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+
+```{r}
+rm(list = ls())
+test=read.csv("C:/Users/lawye/Desktop/HTestLastNoY.csv")
+train=read.csv("C:/Users/lawye/Desktop/HTrainLast.csv")
+dim(train)
+
+head(test)
+
+Drop_missing <- function(data) { 
+  drops <- c("Fireplaces","FireplaceQu", "Fence", "PoolQC","Condition2","RoofMatl","PoolArea", "MiscVal","LotArea","Street","Utilities","MasVnrArea","X2ndFlrSF","X1stFlrSF" ,"Alley","YearBuilt","Exterior2nd","BsmtExposure","ExterCond","BsmtFinType1","BsmtFinType2","BsmtFinSF1","BsmtFinSF2","BsmtUnfSF","CentralAir","Electrical","KitchenAbvGr","Functional","GarageYrBlt","GarageCars","GarageQual","GarageCond","PavedDrive","BsmtFullBath","BsmtHalfBath","FullBath","HalfBath","EnclosedPorch")
+  data <- data[, !(names(data) %in% drops)] 
+  return(data)
+}
+
+```
+
+
+```{r}
+Change_NA_to_No <- function(the_col){
+  index <- which(the_col=="NA")
+  the_col[index] <- "NO"
+}
+
+train[is.na(train$TotalBsmtSF),]$TotalBsmtSF <- mean(train$TotalBsmtSF,na.rm = T) ## Filled the missing values with average value
+
+train$LotShape<-ifelse(train$LotShape=="Reg","Reg", "IREG") ## Reduced 4 categorical variables into 2
+train$LotShape=as.factor(train$LotShape)
+train[is.na(train$MasVnrType),]$MasVnrType <- "None"
+```
+
+
+```{r}
+
+train[is.na(train$MiscFeature),]$MiscFeature <- "Othr" ## Changed missing micellaneous variable to other
+levels(train$BsmtQual) <- c(levels(train$BsmtQual), "None")
+train[is.na(train$BsmtQual),]$BsmtQual <- "None" 
+levels(train$BsmtCond) <- c(levels(train$BsmtCond), "None")
+train[is.na(train$BsmtCond),]$BsmtCond <- "None"
+```
+
+
+```{r}
+train$totalfloorsqft=train$X1stFlrSF+train$X2ndFlrSF ## Combined first and second floor square feet into total
+train$X2ndFlr=ifelse(train$X2ndFlrSF==0,"No", "Yes")  ## "Yes" if a house has second floor
+train$X2ndFlr=as.factor(train$X2ndFlr) 
+
+train$fireplace=as.factor(ifelse(train$Fireplaces==0,"No", "Yes")) ## "Yes" if a house has fireplace
+
+train$BsmtHalfBath=train$BsmtHalfBath*0.5
+train$totalbsmtbath=train$BsmtFullBath+train$BsmtHalfBath ## Combined half and full basement bathrooms
+train[is.na(train$totalbsmtbath),]$totalbsmtbath <- 0 ## For missing variable, no basement bathroom
+train$totalbsmtbath=as.factor(train$totalbsmtbath)
+```
+
+```{r}
+unique(train$HalfBath)
+
+train$totalbath=train$FullBath+train$HalfBath ## Combined basement half and full bathrooms
+train$totalbath=as.factor(train$totalbath)
+
+train$KitchenAbvGr=as.factor(train$KitchenAbvGr) ## Turn into categorical variables
+train$BedroomAbvGr=as.factor(train$BedroomAbvGr)
+train$TotRmsAbvGrd=as.factor(train$TotRmsAbvGrd)
+
+levels(train$GarageType) <- c(levels(train$GarageType), "None") ## Turn all missing values into 'None' variable
+train[is.na(train$GarageType),]$GarageType <- "None"
+levels(train$GarageFinish) <- c(levels(train$GarageFinish), "None")
+train[is.na(train$GarageFinish),]$GarageFinish <- "None"
+```
+
+
+
+
+```{r}
+train[is.na(train$GarageArea),]$GarageArea <- 0 ## Turn missing variable into zero 
+train$WoodDeckSF=ifelse(train$WoodDeckSF==0,"No", "Yes") ## "Yes" if there is wood deck 
+train$WoodDeckSF=as.factor(train$WoodDeckSF)
+train$X3SsnPorch=ifelse(train$X3SsnPorch==0,"No", "Yes") ## "Yes" if there is three season porch
+train$X3SsnPorch=as.factor(train$X3SsnPorch)
+train$ScreenPorch=ifelse(train$ScreenPorch==0,"No", "Yes") ## "Yes" if there is screen porch
+train$ScreenPorch=as.factor(train$ScreenPorch)
+train$Fence=ifelse(train$Fence=="NA","No", "Yes") ## "Yes" if there is fence
+train$Fence=as.factor(train$Fence)
+train$ScreenPorch=as.factor(train$ScreenPorch)
+
+
+train[is.na(train$KitchenQual),]$KitchenQual <- "TA" ## Turn missing kitchen quality variable to 'Average'
+train[is.na(train$MSZoning),]$MSZoning <- "RL"## Turn missing zoning classification variable to 'low density'
+```
+
+
+```{r}
+test[is.na(test$TotalBsmtSF),]$TotalBsmtSF <- mean(test$TotalBsmtSF,na.rm = T) # Turn missing variable for total square feet of basement area to average value
+test$LotShape<-ifelse(test$LotShape=="Reg","Reg", "IREG") # Reduce general shape of property variable to two 
+test$LotShape=as.factor(test$LotShape)
+test[is.na(test$MasVnrType),]$MasVnrType <- "None"
+
+
+test[is.na(test$MiscFeature),]$MiscFeature <- "Othr"
+
+levels(test$BsmtQual) <- c(levels(test$BsmtQual), "None")
+test[is.na(test$BsmtQual),]$BsmtQual <- "None"
+levels(test$BsmtCond) <- c(levels(test$BsmtCond), "None")
+test[is.na(test$BsmtCond),]$BsmtCond <- "None"
+
+
+
+test$totalfloorsqft=test$X1stFlrSF+test$X2ndFlrSF # Combine first and second floor square feet
+test$X2ndFlr=ifelse(test$X2ndFlrSF==0,"No", "Yes") # "Yes" if a house has second floor
+test$X2ndFlr=as.factor(test$X2ndFlr)
+
+test$fireplace=as.factor(ifelse(test$Fireplaces==0,"No", "Yes")) # "Yes" if a house has fireplace
+
+test$BsmtHalfBath=test$BsmtHalfBath*0.5
+test$totalbsmtbath=test$BsmtFullBath+test$BsmtHalfBath
+test[is.na(test$totalbsmtbath),]$totalbsmtbath <- 0 # 0 if house doesn't have basement
+test$totalbsmtbath=as.factor(test$totalbsmtbath)
+
+test$HalfBath=test$HalfBath*0.5
+test$totalbath=test$FullBath+test$HalfBath
+test$totalbath=as.factor(test$totalbath)
+
+test$KitchenAbvGr=as.factor(test$KitchenAbvGr)
+test$BedroomAbvGr=as.factor(test$BedroomAbvGr)
+test$TotRmsAbvGrd=as.factor(test$TotRmsAbvGrd)
+
+levels(test$GarageType) <- c(levels(test$GarageType), "None")
+test[is.na(test$GarageType),]$GarageType <- "None"
+levels(test$GarageFinish) <- c(levels(test$GarageFinish), "None")
+test[is.na(test$GarageFinish),]$GarageFinish <- "None"
+
+```
+
+
+```{r}
+test[is.na(test$SaleType),]$SaleType <- "WD" ## 'Conventional' if sale type is missing
+test[is.na(test$Exterior1st),]$Exterior1st <- "VinylSd" ## 'Vinyl Siding' if exterior cover variable is missing 
+test[is.na(test$GarageArea),]$GarageArea <- 0 ## 0 if garage is missing
+
+test$WoodDeckSF=ifelse(test$WoodDeckSF==0,"No", "Yes") # "Yes" if house has wood deck
+test$WoodDeckSF=as.factor(test$WoodDeckSF)
+test$X3SsnPorch=ifelse(test$X3SsnPorch==0,"No", "Yes") # "Yes" if house has three season porch
+test$X3SsnPorch=as.factor(test$X3SsnPorch)
+test$ScreenPorch=ifelse(test$ScreenPorch==0,"No", "Yes") # "Yes" if house has screen porch
+test$ScreenPorch=as.factor(test$ScreenPorch)
+test$Fence=ifelse(test$Fence=="NA","No", "Yes") # "Yes" if house has fence
+test$Fence=as.factor(test$Fence)
+test$ScreenPorch=as.factor(test$ScreenPorch)
+
+test[is.na(test$MSZoning),]$MSZoning <- "RL"
+```
+
+```{r}
+trainnew=Drop_missing(train)
+testnew=Drop_missing(test)
+library(dplyr)
+
+lot <- trainnew %>% group_by(Neighborhood) %>% summarise(lot = median(LotFrontage, na.rm = T)) %>% as.data.frame() # Median linear feet of street connected to property by neighborhood
+
+
+for(i in 1:25){
+  trainnew[trainnew$Neighborhood == lot[i,1],]$LotFrontage <- ifelse(is.na(trainnew[trainnew$Neighborhood == lot[i,1],]$LotFrontage), lot[i,2], trainnew[trainnew$Neighborhood == lot[i,1],]$LotFrontage)
+}
+
+## For each neighborhood fill their missing value of linear feet of street connected to property by median value 
+trainnew[is.na(trainnew$affordabilitty),]$affordabilitty <- "Unaffordable" # 'Unaffordable' if missing
+
+lot <- testnew %>% group_by(Neighborhood) %>% summarise(lot = median(LotFrontage, na.rm = T)) %>% as.data.frame()
+
+
+for(i in 1:25){
+  testnew[testnew$Neighborhood == lot[i,1],]$LotFrontage <- ifelse(is.na(testnew[testnew$Neighborhood == lot[i,1],]$LotFrontage), lot[i,2], testnew[testnew$Neighborhood == lot[i,1],]$LotFrontage)
+}
+
+summary(testnew)
+
+summary(trainnew)
+
+```
+
+```{r}
+library(randomForest)
+
+testnew$affordabilitty<-as.factor(c(rep("Affordable",750), rep("Unaffordable", 750)))
+df<-rbind(trainnew,testnew)
+dim(df)
+
+trainnew<-df[1:3500,]
+testnew<-df[3501:5000,-43]
+
+testing <- randomForest(affordabilitty~., data = trainnew,mtry=8, importance = TRUE)
+testing 
+
+predicting <- predict(testing, newdata = testnew)
+summary(predicting)
+
+plot(predicting,testnew$affordabilitty) 
+names(predicting)<-"affordabilitty"
+write.csv(predicting,"~/Desktop/results.csv")
+
+```
+
+```{r}
+importance(testing)
+varImpPlot(testing,sort =T)
+```
+
+
+
+#adjusting
+
+```{r}
+Drop_more <- function(data){ 
+  drops <- c("MasVnrType","SaleType","SaleCondition","HeatingQC","RoofStyle","OverallCond","GarageType","BedroomAbvGr")
+  data <- data[, !(names(data) %in% drops)] 
+  return(data)
+}
+
+testnew
+train2=Drop_more(trainnew)
+test2=Drop_more(testnew)
+
+test2$affordabilitty<-as.factor(c(rep("Affordable",750), rep("Unaffordable", 750)))
+test2.affordability <- as.factor(c(rep("Affordable",750), rep("Unaffordable", 750)))
+                        
+df2<-rbind(train2,test2)
+dim(df2)
+colnames(df2)
+train2<-df2[1:3500,]
+test2<-df2[3501:5000,-35]
+testing2 <- randomForest(affordabilitty~., data = train2,mtry=5, importance = TRUE)
+predicting2 <- predict(testing2, newdata = test2)
+
+table(test2.affordability)
+table(predicting2)
+
+barplot(matrix(c(750,750,742,758),nr=2), beside=T, 
+        col=c("darkblue","red"), 
+        names.arg=c("Test","Prediction"), main="Random Forest", ylim=c(0,1200))
+legend("topright", c("Affordable","Unaffordable"), pch=15, 
+       col=c("darkblue","red"), 
+       bty="n")
+text(1.5, 800, "750")
+text(2.5, 800, "750")
+text(4.5, 800, "742")
+text(5.5, 810, "758")
+
+
+
+names(predicting2)<-"affordabilitty"
+write.csv(predicting2,"~/Desktop/results2.csv")
+
+```
+
+
+
+#All Other Model we used
+```{r}
+#Navie Bayes
+library(e1071)
+bayes.model<-naiveBayes(factor(affordabilitty)~., data =trainnew)
+predict.bayes<-predict(bayes.model,trainnew,type="class")
+table(predict.bayes, trainnew$affordabilitty)
+bayes.accuracy <- sum(diag(table(predict.bayes, trainnew$affordabilitty))) / 3500
+bayes.accuracy
+
+naive_bayes_Y <- c(185,1576,1621,118)
+naive_bayes_graph <- confusionTable(naive_bayes_Y, 'Naive Bayes')
+naive_bayes_graph
+
+#log regression
+log.model <- glm(affordabilitty ~., data = trainnew, family = binomial)
+prob <- predict(log.model, type = "response")
+pred <- rep(0, length(prob))
+pred[prob >= 0.5] <- 1
+table(pred, trainnew$affordabilitty)
+log.accuracy <- sum(diag(table(pred, trainnew$affordabilitty))) / 3500
+log.accuracy
+
+log_Y <- c(57,1704,1671,68)
+log_graph <- confusionTable(log_Y, 'Log Regression')
+log_graph
+
+#SVM
+svm.model<-svm(factor(affordabilitty)~., data =trainnew)
+predict.SVM<-predict(svm.model,trainnew,type="class")
+table(predict.SVM, trainnew$affordabilitty)
+
+SVM_Y <- c(94,1667,1646,93)
+SVM_graph <- confusionTable(SVM_Y, 'Support Vector Machine (SVM)')
+SVM_graph
+
+
+svm.accuracy<- sum(diag(table(predict.SVM, trainnew$affordabilitty))) / 3500
+svm.accuracy
+
+
+#Decision Tree
+library(tree)
+tr.model<-tree(factor(affordabilitty)~., data =trainnew)
+predict.tr<-predict(tr.model,testnew,type="class")
+misc <- summary(tr.model)$misclass
+tr.accuracy <- 1 - (misc[1] / misc[2]) 
+tr.accuracy
+
+c(2,2,2)
+
+```
+
+```{r}
+library(ggplot2)
+
+confusionTable <- function(Y, title) {
+  
+  TClass <- factor(c("Affordable", "Affordable","Not Affordable", "Not Affordable"))
+  PClass <- factor(c("Not Affordable", "Affordable", "Not Affordable", "Affordable"))
+  df <- data.frame(TClass, PClass, Y)
+
+  p <- ggplot(data =  df, mapping = aes(x = TClass, y = PClass)) +
+  geom_tile(aes(fill = Y), colour = "white") +
+  geom_text(aes(label = sprintf("%1.0f", Y)), vjust = 1) +
+  scale_fill_gradient(low = "#3399ff", high = "red") +
+  theme_bw() + theme(legend.position = "none") + ggtitle(title) +
+  theme(plot.title = element_text(hjust = 0.5)) + xlab(NULL) + ylab(NULL)
+
+ return (p)
+}
+
+```
+
+

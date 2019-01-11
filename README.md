@@ -65,8 +65,30 @@ We want to use Logistic Regression as our ﬁrst method for classiﬁcation and 
 This means that if : ![alt text](https://latex.codecogs.com/gif.latex?Pr%28Affordable%7CX%29%20%3E%200.5) 
 then we classify that home as being aﬀordable!
 
+We considered building the logistic regression model where the logistic model has a logit that is linear in X, estimatingourcoeﬃcientsofthemodelbythemethodofmaximumlikelihood,therebyobtainingourpredictions.
+The results our predictions can be seen by the confusion matrix below
 
-then we classify that home as being aﬀordable!
+### Support Vector Machine ###
+
+It is natural to consider Support Vector Machines as our next learning method as it has a relationship with logistic regression. Speciﬁcally, only the subset of observations, the support vectors, will play a role in the classiﬁer and observations on the correct side of the margin have no eﬀect (loss function of 0). Likewise, points that lie far from the decision boundary of logistic regression have near a loss of 0. Hence, these two methods go hand in hand and require some similar intuitions.
+
+The default SVM method was used which is of a non-linear (radial) kernal, in addition to a cost value of 1 and a gamma of 0.005050505. Our motivation was to use a non-linear kernal to correct problems that result with using linear kernals when actually non-linear class boundaries exist. 
+
+By the confusion matrix results below, the method of SVM did result in a high accuracy as well (93%), but inferior to logistic regression by a tiny margin.
+
+### Naive Bayes Classifier
+
+It is worth noting that SVM ought to have their parameters tuned for optimal performance. Though we chose a cost value of 1, the cost value should be chosen with cross validation, as a small value of cost yields a classiﬁer that may have low bias but high variance, and a large value of C will bring higher bias but lower variance. Finding the best C is also important. 
+
+Likewise, because we chose a kernal of radial for our SVM method, we could have also tuned the gamma parameter because as gamma increases the ﬁt is more ﬂexible and non-linear which may be neccacary to improve accuracy. 
+
+We chose Naive Bayes model because _ﬁrstly_, it is very easy and quick to use. Although there were many models at our disposal, since NB is not diﬃcult to implement, we decided to give it a try. _Secondly_, NB can handle both discrete and continuous feature variables. Our housing data contained variables that belonged to both, so it is another reason we picked NB. _Thirdly_, NB is not sensitive to irrelevant features. This is one of the strong advantages that NB has because our housing data contained sheer number of up to 50 predictor variables. Upon observing each of them, we discovered that many variables may be deemed insigniﬁcant and choosing NB was great in mitigating this what could’ve been the main source of trouble. · 
+
+__Naive Bayes Assumption__
+![alt text](https://latex.codecogs.com/gif.latex?P%28X1%2CX2%7CY%29%3D%20P%28X1%7CX2%2CY%29P%28X2%7CY%29%3D%20P%28X1%7CY%29P%28X2%7CY%29)
+
+
+
 
 Models  | Accuracy
 ------------- | -------------

@@ -2,7 +2,9 @@
 Team members: Jaehyeong Lee, Avash Monjaemi, Sally Zhu, Iris Liu
 
 # Introduction
-As a team of 4, we participated in Kaggle competition for predicting affordability of residential homes in Ames, Iowa. During the course, we utilized feature engineering methods such as Principal Component Analysis (PCA) amd dimension reduction on raw dataset that contained sheer number of 79 variables. After a rigorous data cleaning and data manipulation, we moved onto using various advanced regression techniques such as Random Forest (RF) and logistic regression. At the end, we have achieved accuracy of about 98% on test dataset and won _2nd place_ among participants of around 50 people!
+As a team of 4, we participated in Kaggle competition for predicting affordability of residential homes in Ames, Iowa. During the course, we utilized feature engineering methods such as Principal Component Analysis (PCA) amd dimension reduction on raw dataset that contained sheer number of 79 variables. 
+
+After a rigorous data cleaning and data manipulation, we moved onto using various advanced regression techniques such as Random Forest (RF) and logistic regression. At the end, we have achieved accuracy of about 98% on test dataset and won _2nd place_ among participants of around 50 people!
 
 # 1. Competition Description
 
@@ -54,7 +56,16 @@ __1. Variable descriptions indicate NA is an absence of a feature__
 __2. NAs are ﬁlled by measures of central tendency / most commonly occuring class__ 
 * _Example_ : One observation for the training data’s MSZoning (zoning classiﬁcation of the sale) is an NA and therefore assigned to the most commonly occuring class of RL : Residental Low Densit
 
-# Methods
+# Data Modeling
+
+### Logistic Regression ###
+
+We want to use Logistic Regression as our ﬁrst method for classiﬁcation and use it as a baseline that we will then compare with more complex and fancy algorithms. Furthermore, we want to utilize at least one method that will classify observations according to the probability that they correspond to a certain class. 
+
+This means that if : ![alt text](https://latex.codecogs.com/gif.latex?Pr%28Affordable%7CX%29%20%3E%200.5) then we classify that home as being aﬀordable!
+
+
+then we classify that home as being aﬀordable!
 
 Models  | Accuracy
 ------------- | -------------

@@ -14,7 +14,11 @@ With 79 explanatory variables describing (almost) every aspect of residential ho
 
 # Data Cleaning / Processing
 
-Examining the dataset brieﬂy gives preliminary insight for how the training and testing data should be manipulated which are : (1) Certain characteristics of a home have multiple variables linked to them, (2) Data collection from select predictors resulted in a number of NA results that ought to be corrected for, and (3) Existence of both numeric and character variables and how they may conﬂict during future data modeling procedures unless they are restructured or simpliﬁed. 
+Examining the dataset brieﬂy gives preliminary insight for how the training and testing data should be manipulated which are:
+
+* Certain characteristics of a home have multiple variables linked to them 
+* Data collection from select predictors resulted in a number of NA results that ought to be corrected for
+* Existence of both numeric and character variables and how they may conﬂict during future data modeling procedures unless they are restructured or simpliﬁed. 
 
 # Methods
 

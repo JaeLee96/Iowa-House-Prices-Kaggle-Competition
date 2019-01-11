@@ -85,8 +85,18 @@ Likewise, because we chose a kernal of radial for our SVM method, we could have 
 We chose Naive Bayes model because _ﬁrstly_, it is very easy and quick to use. Although there were many models at our disposal, since NB is not diﬃcult to implement, we decided to give it a try. _Secondly_, NB can handle both discrete and continuous feature variables. Our housing data contained variables that belonged to both, so it is another reason we picked NB. _Thirdly_, NB is not sensitive to irrelevant features. This is one of the strong advantages that NB has because our housing data contained sheer number of up to 50 predictor variables. Upon observing each of them, we discovered that many variables may be deemed insigniﬁcant and choosing NB was great in mitigating this what could’ve been the main source of trouble. · 
 
 __Naive Bayes Assumption__
+
 ![alt text](https://latex.codecogs.com/gif.latex?P%28X1%2CX2%7CY%29%3D%20P%28X1%7CX2%2CY%29P%28X2%7CY%29%3D%20P%28X1%7CY%29P%28X2%7CY%29)
 
+### Decision Trees ###
+
+Decision tree was deﬁnitely one of our top choices for modeling. It is very intuitively clear and easy to interpret and lays out paths for diﬀerent scenarios. It can also be combined with other techniques such as Support Vector Machines (SVM).
+
+We built a classiﬁcation tree that contained 12 terminal nodes. We did not seek to prune the tree and check the results of a pruned tree. Although pruning and using cross-validation to ﬁnd the optimal complexity of a tree is useful, we were knowledgeable of methods such as a random forest or boosting that already work to improve decision tree problems. 
+
+### Random Forest ###
+
+Random Forest (RF) generated the best outcome out of 5 models. We divided the training data into new training dataset and testing dataset by 7:3 ratio. Then we used 8 as value for mtry parameter to ﬁt RF model. As a result, we got the prediction accuracy of 0.98. We derive this high accuracy of random forest model from the fact that they normalize overﬁtting risk by averaging out trees of random sub-samples from the dataset. Hence this model resulted in less variance than other models and generated more accurate predictions. The actual predictions that this model assigned for the observations can be seen by counts below in a barchart.
 
 
 

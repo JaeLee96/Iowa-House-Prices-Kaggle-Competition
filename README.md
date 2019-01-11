@@ -2,7 +2,7 @@
 Team members: Jaehyeong Lee, Avash Monjaemi, Sally Zhu, Iris Liu
 
 # Overview
-As a team of 4, we participated in Kaggle competition for predicting affordability of residential homes in Ames, Iowa. During the course, we utilized feature engineering methods such as Principal Component Analysis (PCA) amd dimension reduction on raw dataset that contained sheer number of 79 variables. After a rigorous data cleaning and data manipulation, we moved onto using various advanced regression techniques such as Random Forest (RF) and logistic regression. At the end, we have achieved accuracy of about 98% on test dataset and won 2nd place among participants of around 50 people.
+As a team of 4, we participated in Kaggle competition for predicting affordability of residential homes in Ames, Iowa. During the course, we utilized feature engineering methods such as Principal Component Analysis (PCA) amd dimension reduction on raw dataset that contained sheer number of 79 variables. After a rigorous data cleaning and data manipulation, we moved onto using various advanced regression techniques such as Random Forest (RF) and logistic regression. At the end, we have achieved accuracy of about 98% on test dataset and won _2nd place_ among participants of around 50 people!
 
 # Competition Description
 
@@ -12,3 +12,13 @@ Ask a home buyer to describe their dream house, and they probably won't begin wi
 
 With 79 explanatory variables describing (almost) every aspect of residential homes in Ames, Iowa, this competition challenges you to predict the final price of each home.
 
+# Data Cleaning / Processing
+
+Examining the dataset brieﬂy gives preliminary insight for how the training and testing data should be manipulated which are : (1) Certain characteristics of a home have multiple variables linked to them, (2) Data collection from select predictors resulted in a number of NA results that ought to be corrected for, and (3) Existence of both numeric and character variables and how they may conﬂict during future data modeling procedures unless they are restructured or simpliﬁed. 
+
+# Methods
+
+First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell

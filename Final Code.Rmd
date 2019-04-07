@@ -1,6 +1,6 @@
 ---
-title: "salllly"
-author: "Yuqi Zhu"
+title: "Iowa-House-Pricing"
+author: "Jaehyeong Lee"
 date: "11/29/2018"
 output:
   pdf_document: default

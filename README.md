@@ -66,7 +66,7 @@ This means that if : ![alt text](https://latex.codecogs.com/gif.latex?Pr%28Affor
 
 then we classify that home as being aﬀordable!
 
-We considered building the logistic regression model where the logistic model has a logit that is linear in X, estimatingourcoeﬃcientsofthemodelbythemethodofmaximumlikelihood,therebyobtainingourpredictions.
+We considered building the logistic regression model where the logistic model has a logit that is linear in X, estimating our coeﬃcients of the model by the method of maximum likelihood, thereby obtaining our predictions.
 The results our predictions can be seen by the confusion matrix below
 
 ### Support Vector Machine ###
